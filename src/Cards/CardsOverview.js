@@ -36,13 +36,7 @@ class CardsOverview extends Component {
       <div className="CardsOverview">
         {error && <p>{error.message}</p>}
         {isLoading && <p>Nieuws laden..</p>}
-        <CSSTransitionGroup
-          transitionAppear={true}
-          transitionAppearTimeout={500}
-          transitionEnter={false}
-          transitionLeave={false}>
-          {nieuwsItem && nieuwsItem}
-        </CSSTransitionGroup>
+        {nieuwsItem && nieuwsItem}
       </div>
     );
   }

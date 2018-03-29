@@ -2,7 +2,7 @@
   "name": "nieuws-dashboard",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://blinkrano.github.io/nieuws-dashboard",
+  "homepage": "https://blinkrano.github.io/nieuws-dashboard",
   "dependencies": {
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
