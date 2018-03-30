@@ -6,4 +6,6 @@ body {
   font-family: 'Lato', sans-serif;
   border: 0;
   vertical-align: baseline;
+  height: 100vh;
+  background: #f2f2f2;
 }
