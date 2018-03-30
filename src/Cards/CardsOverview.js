@@ -28,7 +28,7 @@ class CardsOverview extends Component {
     const {currentIndex} = this.state;
     const {nieuwsItems} = this.props;
 
-    const step = 2;
+    const step = 1;
     const newIndex = (currentIndex >= (nieuwsItems.length - step)) ? 0 : (currentIndex + step);
 
     this.setState({
@@ -53,8 +53,7 @@ class CardsOverview extends Component {
   renderNieuwsItems(news) {
     const {currentIndex} = this.state;
     let shownItems = [
-      news[currentIndex],
-      news[currentIndex+1]
+      news[currentIndex]
     ];
 
     if (shownItems) {

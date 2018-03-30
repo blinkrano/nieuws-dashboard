@@ -22,9 +22,6 @@ class App extends Component {
 
     return (
       <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">RTL Nieuws</h1>
-        </header>
         <div className="App-content">
           {error && <p>{error.message}</p>}
           {isLoading && <p>Nieuws laden..</p>}
