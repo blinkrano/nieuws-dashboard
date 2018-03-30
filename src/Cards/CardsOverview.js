@@ -3,7 +3,7 @@ import './CardsOverview.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-// import { CSSTransitionGroup } from 'react-transition-group'
+import Moment from 'react-moment';
 
 import Card from './Card'
 
@@ -14,11 +14,10 @@ class CardsOverview extends Component {
 
   state = {
     currentIndex: 0,
-    shownItems: [],
   }
 
   loopCarrousel() {
-    const delay = 5000;
+    const delay = 10000;
     setInterval(() => {
       this.updateCarrousel();
     }, delay);
@@ -45,6 +44,10 @@ class CardsOverview extends Component {
 
     return (
       <div className="CardsOverview">
+        <div className="CardsOverview__header">
+          <h1>RTL Nieuws</h1>
+          <h2><Moment locale="nl" format="dddd DD MMMM HH:mm"/></h2>
+        </div>
         {nieuwsItems && this.renderNieuwsItems(nieuwsItems)}
       </div>
     );
@@ -67,7 +70,8 @@ class CardsOverview extends Component {
       image={item.urlToImage}
       headline={item.title}
       content={item.description}
-      publishDate={item.publishedAt} />;
+      publishDate={item.publishedAt}
+    />
   }
 }
 

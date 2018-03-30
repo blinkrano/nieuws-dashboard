@@ -3,8 +3,6 @@ import './Card.css';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import Moment from 'react-moment';
-
 class Card extends Component {
   static propTypes = {
     content: PropTypes.string,
@@ -13,25 +11,24 @@ class Card extends Component {
     publishDate: PropTypes.string,
   };
 
-  state = {
-    show: false,
-    style: {
-      opacity: 0,
-      transition: 'all 2s ease',
-    }
+  cardItem = null;
+
+  setCardItemRef = element => {
+    this.cardItem = element;
+  };
+
+  componentDidMount() {
+    this.cardItem.style.opacity = 1;
   }
 
   render() {
     const {content, headline, image, publishDate} = this.props;
     const style = {
       backgroundImage: `url(${image})`,
+      opacity: 0,
     }
 
-    return <div className="Card" key={publishDate} style={style}>
-      <div className="Card__date">
-        <h1>RTL Nieuws</h1>
-        <h2><Moment locale="nl" format="dddd DD MMMM HH:mm"/></h2>
-      </div>
+    return <div className="Card" key={publishDate} style={style} ref={this.setCardItemRef}>
       <div className="Card__container">
         <div className="Card__content">
           <h1 className="Card__content--title">{headline}</h1>
@@ -39,6 +36,12 @@ class Card extends Component {
         </div>
       </div>
     </div>;
+  }
+
+  componentDidUpdate(){
+    setTimeout(() => {
+      this.cardItem.style.opacity = 1;
+    }, 50);
   }
 }
 
