@@ -1,65 +1,74 @@
 import './CardsOverview.css';
 
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
 import { CSSTransitionGroup } from 'react-transition-group'
 
 import Card from './Card'
 
-const API = 'https://newsapi.org/v2/top-headlines?sources=rtl-nieuws';
-const KEY = '&apiKey=4a423d2c0634409dbd26879b61ec9c2a';
-
 class CardsOverview extends Component {
+  static propTypes = {
+    nieuwsItems: PropTypes.array,
+  };
+
   state = {
-    nieuwsItems: [],
-    isLoading: false,
-    error: null,
+    currentIndex: 0,
+    shownItems: [],
   }
 
+  loopCarrousel() {
+    const delay = 5000;
+    setInterval(() => {
+      this.updateCarrousel();
+    }, delay);
+  }
+
+  updateCarrousel = () => {
+    const {currentIndex} = this.state;
+    const {nieuwsItems} = this.props;
+
+    const step = 2;
+    const newIndex = (currentIndex >= (nieuwsItems.length - step)) ? 0 : (currentIndex + step);
+
+    this.setState({
+      currentIndex: newIndex,
+    });
+  };
+
   componentDidMount() {
-    this.setState({ isLoading: true});
-    this.fetchNews();
+    this.loopCarrousel();
   }
 
   render() {
-    const {isLoading, error, nieuwsItems} = this.state;
-    const nieuwsItem = nieuwsItems.map((item, idx) =>
-      <Card
-        key={idx}
-        image={item.urlToImage}
-        headline={item.title}
-        content={item.description}
-        publishDate={item.publishedAt}
-      />
-    )
+    const {nieuwsItems} = this.props;
 
     return (
       <div className="CardsOverview">
-        {error && <p>{error.message}</p>}
-        {isLoading && <p>Nieuws laden..</p>}
-        {nieuwsItem && nieuwsItem}
+        {nieuwsItems && this.renderNieuwsItems(nieuwsItems)}
       </div>
     );
   }
 
-  fetchNews() {
-    fetch(API+KEY)
-      .then(response => {
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error('Er is iets fout gegaan met het laden..');
-        }
-      })
-      .then(data =>
-        this.setState({
-          nieuwsItems: data.articles,
-          isLoading: false,
-        })
-      )
-      .catch(error => this.setState({
-        error,
-        isLoading: false,
-      }))
+  renderNieuwsItems(news) {
+    const {currentIndex} = this.state;
+    let shownItems = [
+      news[currentIndex],
+      news[currentIndex+1]
+    ];
+
+    if (shownItems) {
+      return shownItems.map((item, index) => this.renderNieuwsItem(item, index));
+    }
+  }
+
+  renderNieuwsItem(item, index) {
+    return item && <Card
+      key={index}
+      image={item.urlToImage}
+      headline={item.title}
+      content={item.description}
+      publishDate={item.publishedAt} />;
   }
 }
 
