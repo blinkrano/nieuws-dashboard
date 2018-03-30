@@ -25,9 +25,11 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">RTL Nieuws</h1>
         </header>
-        {error && <p>{error.message}</p>}
-        {isLoading && <p>Nieuws laden..</p>}
-        {nieuwsItems && <CardsOverview nieuwsItems={nieuwsItems}></CardsOverview>}
+        <div className="App-content">
+          {error && <p>{error.message}</p>}
+          {isLoading && <p>Nieuws laden..</p>}
+          {nieuwsItems && <CardsOverview nieuwsItems={nieuwsItems}></CardsOverview>}
+        </div>
       </div>
     );
   }
